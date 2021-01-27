@@ -33,6 +33,22 @@ resource "azurerm_network_interface" "demo" {
     private_ip_address_allocation = "Dynamic"
   }
 }
+resource "azurerm_public_ip" "public_ip" {
+  allocation_method = "Static"
+  location = azurerm_resource_group.nomadserver.location
+  name = ""
+  resource_group_name = ""
+}
+resource "azurerm_network_interface" "public" {
+  name                = "public-nic"
+  location            = azurerm_resource_group.nomadserver.location
+  resource_group_name = azurerm_resource_group.nomadserver.name
+
+  ip_configuration {
+    name                          = "public"
+    public_ip_address_id = azurerm_public_ip.public_ip.id
+  }
+}
 
 variable "vm_size" {
   default = "Standard_D2s_v3"
@@ -51,6 +67,7 @@ resource "azurerm_linux_virtual_machine" "nomad_server" {
   admin_username      = "adminuser"
   network_interface_ids = [
     azurerm_network_interface.demo.id,
+    azurerm_network_interface.public.id
   ]
 
   admin_ssh_key {
@@ -70,6 +87,7 @@ resource "azurerm_linux_virtual_machine" "nomad_server" {
     version   = "latest"
   }
 }
+
 output "privatekey" {
   value = tls_private_key.adminuser.private_key_pem
 }
