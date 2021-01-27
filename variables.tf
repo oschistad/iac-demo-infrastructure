@@ -5,4 +5,3 @@ variable "client_secret" {}
 variable "tfe_orgname" {
   default = "aztekdemo"
 }
-

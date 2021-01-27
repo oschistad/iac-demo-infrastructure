@@ -33,6 +33,12 @@ resource "azurerm_network_interface" "demo" {
 variable "vm_size" {
   default = "Standard_D2s_v3"
 }
+
+resource "tls_private_key" "adminuser" {
+  algorithm   = "ECDSA"
+  ecdsa_curve = "P384"
+}
+
 resource "azurerm_linux_virtual_machine" "nomad_server" {
   name                = "demo-machine"
   resource_group_name = azurerm_resource_group.nomadserver.name
@@ -45,7 +51,7 @@ resource "azurerm_linux_virtual_machine" "nomad_server" {
 
   admin_ssh_key {
     username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = tls_private_key.adminuser.public_key_openssh
   }
 
   os_disk {
@@ -59,4 +65,7 @@ resource "azurerm_linux_virtual_machine" "nomad_server" {
     sku       = "7_7-gen2"
     version   = "latest"
   }
+}
+output "privatekey" {
+  value = tls_private_key.adminuser.private_key_pem
 }
