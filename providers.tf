@@ -8,9 +8,7 @@ terraform {
     }
   }
 }
-provider "tfe" {
-  token    = var.tfe_token
-}
+
 provider "azurerm" {
   features {}
 }
