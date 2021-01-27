@@ -103,6 +103,7 @@ resource "azurerm_linux_virtual_machine" "nomad_server" {
     sku       = "7_7-gen2"
     version   = "latest"
   }
+  custom_data = local.cloudinit
 }
 
 # Output some useful information about what we just created
