@@ -36,8 +36,8 @@ resource "azurerm_network_interface" "demo" {
 resource "azurerm_public_ip" "public_ip" {
   allocation_method = "Static"
   location = azurerm_resource_group.nomadserver.location
-  name = ""
-  resource_group_name = ""
+  name = "nomad_public_ip"
+  resource_group_name = azurerm_resource_group.nomadserver.name
 }
 resource "azurerm_network_interface" "public" {
   name                = "public-nic"
