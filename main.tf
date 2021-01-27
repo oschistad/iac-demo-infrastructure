@@ -101,8 +101,9 @@ resource "azurerm_linux_virtual_machine" "nomad_server" {
     publisher = "OpenLogic"
     offer     = "CentOS"
     sku       = "7_7-gen2"
-    version   = "latest"
+    version   = "7.7.202006240"
   }
+
   custom_data = base64encode(local.cloudinit)
 }
 
