@@ -1,3 +1,7 @@
+// https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/image
+// https://stackoverflow.com/questions/24418815/how-do-i-install-docker-using-cloud-init
+// https://www.packer.io/docs/builders/azure/arm#custom_managed_image_name
+// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/imaging
 variable "azure_location" {
   default = "West Europe"
 }
@@ -35,8 +39,8 @@ variable "vm_size" {
 }
 
 resource "tls_private_key" "adminuser" {
-  algorithm   = "ECDSA"
-  ecdsa_curve = "P384"
+  algorithm   = "RSA"
+  rsa_bits = 2048
 }
 
 resource "azurerm_linux_virtual_machine" "nomad_server" {
