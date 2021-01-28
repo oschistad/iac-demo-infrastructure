@@ -2,9 +2,6 @@
 // https://stackoverflow.com/questions/24418815/how-do-i-install-docker-using-cloud-init
 // https://www.packer.io/docs/builders/azure/arm#custom_managed_image_name
 // https://docs.microsoft.com/en-us/azure/virtual-machines/linux/imaging
-variable "azure_location" {
-  default = "West Europe"
-}
 
 resource "azurerm_resource_group" "nomadserver" {
   location = var.azure_location
@@ -78,6 +75,7 @@ resource "tls_private_key" "adminuser" {
 
 # Now provision the actual VM
 resource "azurerm_linux_virtual_machine" "nomad_server" {
+  count = 0
   name                = "demo-machine"
   resource_group_name = azurerm_resource_group.nomadserver.name
   location            = azurerm_resource_group.nomadserver.location
@@ -107,14 +105,3 @@ resource "azurerm_linux_virtual_machine" "nomad_server" {
   custom_data = base64encode(local.cloudinit2)
 }
 
-# Output some useful information about what we just created
-# This is totally insecure but who cares, it's a demo.
-output "privatekey" {
-  value = tls_private_key.adminuser.private_key_pem
-}
-output "ip" {
-  value = azurerm_linux_virtual_machine.nomad_server.public_ip_addresses
-}
-output "ip2" {
-  value = azurerm_public_ip.public_ip.ip_address
-}
