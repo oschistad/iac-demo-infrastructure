@@ -8,7 +8,9 @@ variable "tfe_orgname" {
 variable "vm_size" {
   default = "Standard_D2s_v3"
 }
-
+variable "NOMAD_VERSION" {
+  default = "1.0.1"
+}
 locals {
   cloudinit= <<EOT
 sudo yum install -y yum-utils device-mapper-persistent-data lvm2
@@ -34,9 +36,8 @@ packages:
   - containerd.io
 
 runcmd:
-- export NOMAD_VERSION="1.0.1"
-- curl --silent --remote-name https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip
-- unzip nomad_${NOMAD_VERSION}_linux_amd64.zip
+- curl --silent --remote-name https://releases.hashicorp.com/nomad/${var.NOMAD_VERSION}/nomad_${var.NOMAD_VERSION}_linux_amd64.zip
+- unzip nomad_${var.NOMAD_VERSION}_linux_amd64.zip
 - chown root:root nomad
 - mv nomad /usr/local/bin/
 - mkdir --parents /opt/nomad
