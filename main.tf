@@ -104,7 +104,7 @@ resource "azurerm_linux_virtual_machine" "nomad_server" {
     version   = "7.7.2020062401"
   }
 
-  custom_data = base64encode(local.cloudinit)
+  custom_data = base64encode(local.cloudinit2)
 }
 
 # Output some useful information about what we just created

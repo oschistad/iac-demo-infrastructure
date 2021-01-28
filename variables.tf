@@ -21,10 +21,18 @@ EOT
   cloudinit2 = <<EOT
 #cloud-config
 package_upgrade: true
+yum_repos:
+  docker-ce:
+    baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+    enabled: true
 packages:
   - yum-utils
   - device-mapper-persistent-data
   - lvm2
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+
 runcmd:
 - export NOMAD_VERSION="1.0.1"
 - curl --silent --remote-name https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip
