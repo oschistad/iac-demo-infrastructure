@@ -26,10 +26,10 @@ packages:
   - containerd.io
 
 runcmd:
-- curl --silent --remote-name https://releases.hashicorp.com/nomad/${var.NOMAD_VERSION}/nomad_${var.NOMAD_VERSION}_linux_amd64.zip
-- unzip nomad_${var.NOMAD_VERSION}_linux_amd64.zip
-- chown root:root nomad
-- mv nomad /usr/local/bin/
+- curl --silent --remote-name https://releases.hashicorp.com/nomad/${var.NOMAD_VERSION}/nomad_${var.NOMAD_VERSION}_linux_amd64.zip -o /tmp/nomad_${var.NOMAD_VERSION}_linux_amd64.zip
+- unzip /tmp/nomad_${var.NOMAD_VERSION}_linux_amd64.zip -d /tmp
+- chown root:root /tmp/nomad
+- mv /tmp/nomad /usr/local/bin/
 - mkdir --parents /opt/nomad
 write_files:
   - path: /etc/nomad.d/singlenode.hcl
