@@ -11,6 +11,8 @@ EOT
   cloudinit2 = <<EOT
 #cloud-config
 package_upgrade: true
+runcmd:
+  - rpm --import https://download.docker.com/linux/centos/gpg
 yum_repos:
   docker-ce:
     baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
