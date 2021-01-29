@@ -75,7 +75,7 @@ resource "tls_private_key" "adminuser" {
 
 # Now provision the actual VM
 resource "azurerm_linux_virtual_machine" "nomad_server" {
-  count = 0
+  count = 1
   name                = "demo-machine"
   resource_group_name = azurerm_resource_group.nomadserver.name
   location            = azurerm_resource_group.nomadserver.location
@@ -102,6 +102,6 @@ resource "azurerm_linux_virtual_machine" "nomad_server" {
     version   = "7.7.2020062401"
   }
 
-  custom_data = base64encode(local.cloudinit2)
+  custom_data = base64encode(local.cloudinit3)
 }
 
