@@ -80,7 +80,7 @@ runcmd:
   - [ systemctl, start, nomad.service ]
 
 EOT
-  cloudinit3: <<EOT
+  cloudinit3 = <<EOT
 write_files:
   - path: "/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7"
     permissions: "0644"
