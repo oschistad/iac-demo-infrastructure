@@ -13,7 +13,7 @@ EOT
 package_upgrade: true
 yum_repos:
   docker-ce:
-    baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
     enabled: true
 packages:
   - yum-utils
@@ -81,6 +81,8 @@ runcmd:
 
 EOT
   cloudinit3 = <<EOT
+#cloud-config
+package_upgrade: true
 write_files:
   - path: "/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7"
     permissions: "0644"
